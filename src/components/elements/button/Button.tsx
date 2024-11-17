@@ -11,7 +11,7 @@ const Button = ({
 }: ButtonProps) => {
   return (
     <button
-      className={`${classname} rounded py-2 font-medium`}
+      className={`${classname} text-white rounded py-2 font-medium`}
     >
       {children}
     </button>
