@@ -18,7 +18,7 @@ interface CardProductProps {
 
 const CardProduct = ({ children }: CardProductProps) => {
   return (
-    <div className="w-full max-w-sm font-sans bg-white border border-gray-100 rounded-lg shadow">
+    <div className="w-full max-w-sm mx-1 flex flex-col justify-between font-sans bg-white border border-gray-100 rounded-lg shadow">
       {children}
     </div>
   );
@@ -34,7 +34,7 @@ function Header({ image }: HeaderProps) {
 
 function Body({ title, children }: BodyProps) {
   return (
-    <div className="px-5 pb-5">
+    <div className="px-5 pb-5 grow">
       <a href="">
         <h5 className="text-xl font-semibold text-gray-900">{title}</h5>
         <p className="">{children}</p>
