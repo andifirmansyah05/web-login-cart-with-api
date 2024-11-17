@@ -18,7 +18,7 @@ interface CardProductProps {
 
 const CardProduct = ({ children }: CardProductProps) => {
   return (
-    <div className="w-full max-w-sm mx-1 flex flex-col justify-between font-sans bg-white border border-gray-100 rounded-lg shadow">
+    <div className="w-full max-w-sm mx-1 flex flex-col justify-between font-sans bg-white border border-gray-100 rounded-lg shadow-xl">
       {children}
     </div>
   );
