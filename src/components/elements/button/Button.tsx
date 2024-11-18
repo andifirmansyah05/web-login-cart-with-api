@@ -1,17 +1,17 @@
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 
 interface ButtonProps {
   children: ReactNode;
   classname?: string;
-  onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  onClick?: (event?: React.MouseEvent<HTMLButtonElement>) => void;
   type?: "button" | "submit" | "reset";
 }
 
 const Button = ({
   children,
   classname = "bg-blue-500",
-  onClick,
   type = "button",
+  onClick,
 }: ButtonProps) => {
   return (
     <button

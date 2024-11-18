@@ -9,7 +9,9 @@ interface BodyProps {
 }
 
 interface FooterProps {
-  price: string | number; // You can change this to match your use case
+  price: number;
+  handleAddToCard: (id:number) => void;
+  id: number;
 }
 
 interface CardProductProps {
@@ -18,7 +20,7 @@ interface CardProductProps {
 
 const CardProduct = ({ children }: CardProductProps) => {
   return (
-    <div className="w-full max-w-sm mx-1 flex flex-col justify-between font-sans bg-white border border-gray-100 rounded-lg shadow-xl">
+    <div className="w-full max-w-xs mx-1 flex flex-col justify-between font-poppins bg-white border border-gray-100 rounded-lg shadow-2xl">
       {children}
     </div>
   );
@@ -36,18 +38,18 @@ function Body({ title, children }: BodyProps) {
   return (
     <div className="px-5 pb-5 grow">
       <a href="">
-        <h5 className="text-xl font-semibold text-gray-900">{title}</h5>
-        <p className="">{children}</p>
+        <h5 className="text-xl font-semibold text-slate-900">{title}</h5>
+        <p className="text-slate-800">{children}</p>
       </a>
     </div>
   );
 }
 
-function Footer({ price }: FooterProps) {
+function Footer({ price, handleAddToCard, id }: FooterProps) {
   return (
     <div className="px-5 flex justify-between items-center mb-8">
-      <span>{price}</span>
-      <Button classname="bg-blue-600 px-6 hover:bg-blue-800">Add to cart</Button>
+      <span className="text-sm font-bold text-slate-800">{price.toLocaleString("id-ID", {style: "currency", currency: "IDR"})}</span>
+      <Button onClick={() => handleAddToCard(id)} classname="text-sm bg-blue-600 px-6 hover:bg-blue-800">Add to cart</Button>
     </div>
   );
 }
