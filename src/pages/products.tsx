@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../components/elements/button/Button";
 import CardProduct from "../components/fragments/CardProduct";
 
@@ -8,6 +8,11 @@ type Products = {
   price: number;
   image: string;
   description: string;
+};
+
+type CardItem = {
+  id: number;
+  qty: number;
 };
 
 const products: Products[] = [
@@ -40,14 +45,31 @@ const products: Products[] = [
 
 const email = localStorage.getItem("email");
 
-
 const ProductsPage = () => {
-  const [card, setCard] = useState([
-    {
-      id: -1,
-      qty: 1,
-    },
-  ]);
+  const [card, setCard] = useState<CardItem[]>([]);
+  const [totalPrice, setTotalPrice] = useState(0);
+
+  useEffect(() => {
+    const savedCard = localStorage.getItem("card");
+    if (savedCard) {
+      setCard(JSON.parse(savedCard) as CardItem[]);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (card.length > 0) {
+      const sum = card.reduce((acc, item) => {
+        const product = products.find((product) => product.id === item.id);
+        if (!product) {
+          alert(`Product not found for ID: ${item.id}`);
+          return acc;
+        }
+        return acc + product.price * item.qty;
+      }, 0);
+      setTotalPrice(sum);
+      localStorage.setItem("card", JSON.stringify(card));
+    }
+  }, [card]);
 
   const handleLogout = () => {
     localStorage.removeItem("email");
@@ -64,7 +86,7 @@ const ProductsPage = () => {
         );
       }
       // Jika produk belum ada, tambahkan ke daftar, sambil menghapus id -1
-      return [...card.filter((item) => item.id !== -1), { id, qty: 1 }];
+      return [...card, { id, qty: 1 }];
     });
   };
 
@@ -108,6 +130,7 @@ const ProductsPage = () => {
                 const product: Products | undefined = products.find(
                   (product) => product.id === item.id
                 );
+
                 // Tangani kasus undefined
                 if (!product) {
                   return (
@@ -135,6 +158,19 @@ const ProductsPage = () => {
                   </tr>
                 );
               })}
+              <tr>
+                <td colSpan={3}>
+                  <strong>Total Price</strong>
+                </td>
+                <td>
+                  <strong>
+                    {totalPrice.toLocaleString("id-ID", {
+                      style: "currency",
+                      currency: "IDR",
+                    })}
+                  </strong>
+                </td>
+              </tr>
             </tbody>
           </table>
         </div>
