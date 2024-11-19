@@ -5,7 +5,7 @@ interface HeaderProps {
 
 interface BodyProps {
   title: string;
-  children: React.ReactNode;
+  children: string;
 }
 
 interface FooterProps {
@@ -29,7 +29,7 @@ const CardProduct = ({ children }: CardProductProps) => {
 function Header({ image }: HeaderProps) {
   return (
     <a>
-      <img className=" p-5 rounded-t-lg" src={image} alt="product" />
+      <img className="w-full h-60 object-cover p-5" src={image} alt="product" />
     </a>
   );
 }
@@ -38,8 +38,8 @@ function Body({ title, children }: BodyProps) {
   return (
     <div className="px-5 pb-5 grow">
       <a href="">
-        <h5 className="text-xl font-semibold text-slate-900">{title}</h5>
-        <p className="text-slate-800">{children}</p>
+        <h5 className="text-xl font-semibold text-slate-900">{title.substring(0,20)}...</h5>
+        <p className="text-slate-800">{children.substring(0,100)}...</p>
       </a>
     </div>
   );
@@ -48,7 +48,7 @@ function Body({ title, children }: BodyProps) {
 function Footer({ price, handleAddToCard, id }: FooterProps) {
   return (
     <div className="px-5 flex justify-between items-center mb-8">
-      <span className="text-sm font-bold text-slate-800">{price.toLocaleString("id-ID", {style: "currency", currency: "IDR"})}</span>
+      <span className="text-sm font-bold text-slate-800">{price.toLocaleString("id-ID", {style: "currency", currency: "USD"})}</span>
       <Button onClick={() => handleAddToCard(id)} classname="text-sm bg-blue-600 px-6 hover:bg-blue-800">Add to cart</Button>
     </div>
   );
