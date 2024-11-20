@@ -22,8 +22,8 @@ const FormLogin = () => {
         localStorage.setItem("token", res);
         window.location.href = "/products";
       } else {
-        console.log(res)
-        setLoginFailed(res.response.data);
+        // console.log(res)
+        setLoginFailed(res);
         // console.log(response.response.data);
       }
     });

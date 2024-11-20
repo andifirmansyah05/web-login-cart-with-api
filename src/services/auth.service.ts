@@ -14,7 +14,7 @@ interface GetUsernameProps {
   token: string;
 }
 
-type LoginCallback = (status: boolean, response: string | any) => void;
+type LoginCallback = (status: boolean, response: string) => void;
 
 export const login = (data: LoginData, callback: LoginCallback) => {
   axios
@@ -24,9 +24,9 @@ export const login = (data: LoginData, callback: LoginCallback) => {
       // console.log(response.data.token);
       callback(true, response.data.token);
     })
-    .catch(function (error) {
-      //   console.log(error);
-      callback(false, error);
+    .catch((error) => {
+      // console.log(error.response.data);
+      callback(false, error.response.data);
     });
 };
 

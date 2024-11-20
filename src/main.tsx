@@ -6,11 +6,12 @@ import LoginPage from "./pages/login.tsx";
 import RegisterPage from "./pages/register.tsx";
 import ErrorPage from "./pages/404.tsx";
 import ProductsPage from "./pages/products.tsx";
+import App from "./App"
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <div>Halaman Root</div>,
+    element: <App/>,
     errorElement: <ErrorPage />,
   },
   {
