@@ -1,6 +1,8 @@
+import { Link } from "react-router-dom";
 import Button from "../elements/button/Button";
 interface HeaderProps {
   image: string;
+  id: number;
 }
 
 interface BodyProps {
@@ -26,11 +28,11 @@ const CardProduct = ({ children }: CardProductProps) => {
   );
 };
 
-function Header({ image }: HeaderProps) {
+function Header({ image, id }: HeaderProps) {
   return (
-    <a href="">
+    <Link to={`/product/${id}`}>
       <img className="w-full h-60 object-cover p-5" src={image} alt="product" />
-    </a>
+    </Link>
   );
 }
 

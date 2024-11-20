@@ -1,18 +1,18 @@
 import axios from "axios";
 
 interface Products {
-    id: number;
-    title: string;
-    price: number
-    description: string;
-    image: string;
+  id: number;
+  title: string;
+  price: number;
+  description: string;
+  image: string;
 }
 
 interface GetProductsProps {
-  callback: (products: Products[]) => void
+  callback: (products: Products[]) => void;
 }
 
-export const getProducts = ({callback}: GetProductsProps) => {
+export const getProducts = ({ callback }: GetProductsProps) => {
   axios
     .get<Products[]>("https://fakestoreapi.com/products")
     .then((res) => {
@@ -23,4 +23,13 @@ export const getProducts = ({callback}: GetProductsProps) => {
     });
 };
 
-
+export const getDetailProduct = (id, callback) => {
+  axios
+    .get<Products[]>("https://fakestoreapi.com/products" + "/" + id)
+    .then((res) => {
+      callback(res.data);
+    })
+    .catch((err) => {
+      alert(err);
+    });
+};

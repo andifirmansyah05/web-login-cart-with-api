@@ -2,7 +2,9 @@ import { useEffect, useRef, useState } from "react";
 import Button from "../components/elements/button/Button";
 import CardProduct from "../components/fragments/CardProduct";
 import { getProducts } from "../services/products.service";
-import { getUsername } from "../services/auth.service";
+import { useLogin } from "../hooks/useLogin";
+import { PersonIcon } from "@radix-ui/react-icons";
+import { Link } from "react-router-dom";
 
 interface Products {
   id: number;
@@ -49,14 +51,8 @@ const ProductsPage = () => {
   const [card, setCard] = useState<CardItem[]>([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [products, setProducts] = useState<Products[]>([]);
-  const [username, setUsername] = useState("");
-
+  const username = useLogin();
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      setUsername(getUsername({token}));
-    } else window.location.href = "/login";
-
     const savedCard = localStorage.getItem("card");
     if (savedCard) {
       setCard(JSON.parse(savedCard) as CardItem[]);
@@ -114,22 +110,34 @@ const ProductsPage = () => {
 
   return (
     <div className="font-poppins">
-      <div className="h-14 bg-blue-600 text-sm shadow flex gap-x-4 justify-end items-center px-8">
-        {username}
-
-        <Button
-          onClick={handleLogout}
-          classname="bg-black px-6 hover:bg-slate-800"
-        >
-          Logout
-        </Button>
+      <div className="h-14 bg-blue-600 text-sm shadow flex gap-x-4 justify-between items-center px-8">
+        <div>
+          <Link to="/">
+            <h1 className="font-poppins font-bold text-xl hover:text-white">Root Page</h1>
+          </Link>
+        </div>
+        <div className="flex justify-center items-center gap-x-4">
+          {/* agar jadi kapitaal diawal kata */}
+          {username.charAt(0).toUpperCase() + username.slice(1)}
+          <Button
+            onClick={handleLogout}
+            classname="bg-black px-6 hover:bg-slate-800"
+          >
+            Logout
+          </Button>
+          <Link to="/profile">
+            <Button classname="w-8 h-8 flex justify-center rounded-full items-center bg-slate-800 hover:bg-slate-700">
+              <PersonIcon />
+            </Button>
+          </Link>
+        </div>
       </div>
       <div className="flex my-8">
         <div className="flex gap-2 ml-2 flex-wrap w-2/4">
           {products.length > 0 &&
             products.map((product) => (
               <CardProduct key={product.id}>
-                <CardProduct.Header image={product.image} />
+                <CardProduct.Header id={product.id} image={product.image} />
                 <CardProduct.Body title={product.title}>
                   {product.description}
                 </CardProduct.Body>

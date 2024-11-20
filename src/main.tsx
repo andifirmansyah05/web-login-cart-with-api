@@ -6,12 +6,14 @@ import LoginPage from "./pages/login.tsx";
 import RegisterPage from "./pages/register.tsx";
 import ErrorPage from "./pages/404.tsx";
 import ProductsPage from "./pages/products.tsx";
-import App from "./App"
+import App from "./App";
+import ProfilePage from "./pages/profile.tsx";
+import DetailProductPage from "./pages/detailProduct.tsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App/>,
+    element: <App />,
     errorElement: <ErrorPage />,
   },
   {
@@ -23,8 +25,16 @@ const router = createBrowserRouter([
     element: <RegisterPage />,
   },
   {
-    path: "products",
+    path: "/products",
     element: <ProductsPage />,
+  },
+  {
+    path: "/product/:id",
+    element: <DetailProductPage />,
+  },
+  {
+    path: "/profile",
+    element: <ProfilePage />,
   },
 ]);
 

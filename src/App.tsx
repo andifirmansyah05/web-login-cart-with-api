@@ -3,7 +3,7 @@ import Button from "./components/elements/button/Button";
 
 export default function App() {
   return (
-    <div className="flex flex-col gap-y-5 justify-center items-center h-screen">
+    <div className="flex flex-col gap-y-5 mt-20 items-center h-screen">
       <h1 className="text-2xl font-bold font-poppins">Root Page</h1>
 
       <div className="flex gap-x-9">
@@ -15,6 +15,9 @@ export default function App() {
         </Button>
         <Button classname="bg-amber-500 w-20">
           <Link to="/products">Product</Link>
+        </Button>
+        <Button classname="bg-pink-500 w-20">
+          <Link to="/profile">Profile</Link>
         </Button>
       </div>
     </div>
