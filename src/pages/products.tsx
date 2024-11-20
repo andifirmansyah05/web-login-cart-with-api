@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import Button from "../components/elements/button/Button";
 import CardProduct from "../components/fragments/CardProduct";
-import getProducts from "../services/products.service";
+import { getProducts } from "../services/products.service";
+import { getUsername } from "../services/auth.service";
 
 interface Products {
   id: number;
@@ -44,14 +45,18 @@ type CardItem = {
 //   },
 // ];
 
-const email = localStorage.getItem("email");
-
 const ProductsPage = () => {
   const [card, setCard] = useState<CardItem[]>([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [products, setProducts] = useState<Products[]>([]);
+  const [username, setUsername] = useState("");
 
   useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      setUsername(getUsername({token}));
+    } else window.location.href = "/login";
+
     const savedCard = localStorage.getItem("card");
     if (savedCard) {
       setCard(JSON.parse(savedCard) as CardItem[]);
@@ -59,9 +64,11 @@ const ProductsPage = () => {
   }, []);
 
   useEffect(() => {
-    getProducts({callback: (data:Products[]) => {
-      setProducts(data);
-    }});
+    getProducts({
+      callback: (data: Products[]) => {
+        setProducts(data);
+      },
+    });
   }, []);
 
   useEffect(() => {
@@ -80,8 +87,7 @@ const ProductsPage = () => {
   }, [card, products]);
 
   const handleLogout = () => {
-    localStorage.removeItem("email");
-    localStorage.removeItem("password");
+    localStorage.removeItem("token");
     window.location.href = "/login";
   };
 
@@ -109,8 +115,12 @@ const ProductsPage = () => {
   return (
     <div className="font-poppins">
       <div className="h-14 bg-blue-600 text-sm shadow flex gap-x-4 justify-end items-center px-8">
-        {email}
-        <Button onClick={handleLogout} classname="bg-black px-6">
+        {username}
+
+        <Button
+          onClick={handleLogout}
+          classname="bg-black px-6 hover:bg-slate-800"
+        >
           Logout
         </Button>
       </div>
@@ -143,39 +153,42 @@ const ProductsPage = () => {
               </tr>
             </thead>
             <tbody>
-              {products.length > 0 && card.map((item) => {
-                const product: Products | undefined = products.find(
-                  (product) => product.id === item.id
-                );
+              {products.length > 0 &&
+                card.map((item) => {
+                  const product: Products | undefined = products.find(
+                    (product) => product.id === item.id
+                  );
 
-                // Tangani kasus undefined
-                if (!product) {
+                  // Tangani kasus undefined
+                  if (!product) {
+                    return (
+                      <tr key={item.id}>
+                        <td className="text-slate-500">
+                          Product not added yet
+                        </td>
+                      </tr>
+                    );
+                  }
+
                   return (
-                    <tr key={item.id}>
-                      <td className="text-slate-500">Product not added yet</td>
+                    <tr key={item.id} className="border-b border-slate-500">
+                      <td>{product.title.substring(0, 10)}...</td>
+                      <td>
+                        {product.price.toLocaleString("id-ID", {
+                          style: "currency",
+                          currency: "USD",
+                        })}
+                      </td>
+                      <td>{item.qty}</td>
+                      <td>
+                        {(item.qty * product.price).toLocaleString("id-ID", {
+                          style: "currency",
+                          currency: "USD",
+                        })}
+                      </td>
                     </tr>
                   );
-                }
-
-                return (
-                  <tr key={item.id} className="border-b border-slate-500">
-                    <td>{product.title.substring(0,10)}...</td>
-                    <td>
-                      {product.price.toLocaleString("id-ID", {
-                        style: "currency",
-                        currency: "USD",
-                      })}
-                    </td>
-                    <td>{item.qty}</td>
-                    <td>
-                      {(item.qty * product.price).toLocaleString("id-ID", {
-                        style: "currency",
-                        currency: "USD",
-                      })}
-                    </td>
-                  </tr>
-                );
-              })}
+                })}
               <tr ref={totalPriceRef}>
                 <td colSpan={3}>
                   <strong>Total Price</strong>

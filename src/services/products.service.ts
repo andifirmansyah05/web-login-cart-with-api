@@ -12,7 +12,7 @@ interface GetProductsProps {
   callback: (products: Products[]) => void
 }
 
-const getProducts = ({callback}: GetProductsProps) => {
+export const getProducts = ({callback}: GetProductsProps) => {
   axios
     .get<Products[]>("https://fakestoreapi.com/products")
     .then((res) => {
@@ -23,4 +23,4 @@ const getProducts = ({callback}: GetProductsProps) => {
     });
 };
 
-export default getProducts;
+

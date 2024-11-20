@@ -1,35 +1,50 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Button from "../elements/button/Button";
 import InputForm from "../elements/inputs";
+import { login } from "../../services/auth.service";
+
+
 
 const FormLogin = () => {
+  const [loginFailed, setLoginFailed] = useState("");
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const form = e.target as HTMLFormElement;
-    const email = (form.elements.namedItem("email") as HTMLInputElement).value;
-    const password = (form.elements.namedItem("password") as HTMLInputElement)
-      .value;
 
-    localStorage.setItem("email", email);
-    localStorage.setItem("password", password);
-    window.location.href = "/products";
-    console.log("login");
+    const data = {
+      username: (form.elements.namedItem("username") as HTMLInputElement).value,
+      password: (form.elements.namedItem("password") as HTMLInputElement).value,
+    };
+    login(data, (status, res) => {
+      if (status) {
+        localStorage.setItem("token", res);
+        window.location.href = "/products";
+      } else {
+        console.log(res)
+        setLoginFailed(res.response.data);
+        // console.log(response.response.data);
+      }
+    });
   };
 
-  const emailRef = useRef<HTMLInputElement>(null);
+  const usernameRef = useRef<HTMLInputElement>(null);
   useEffect(() => {
-    emailRef.current?.focus(); // current? -> akan mengembalikan undefined jika null
-  },[])
+    usernameRef.current?.focus(); // current? -> akan mengembalikan undefined jika null
+  }, []);
 
   return (
     <form onSubmit={handleSubmit}>
+      {loginFailed && (
+        <p className="text-sm text-center text-red-500">{loginFailed}</p>
+      )}
       <InputForm
-        name="email"
-        type="email"
-        title="Email"
-        placeholder="example@mail.com"
-        ref={emailRef}
+        name="username"
+        type="text"
+        title="Username"
+        placeholder="John Doe"
+        ref={usernameRef}
       />
       <InputForm
         name="password"

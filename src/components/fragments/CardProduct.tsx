@@ -28,7 +28,7 @@ const CardProduct = ({ children }: CardProductProps) => {
 
 function Header({ image }: HeaderProps) {
   return (
-    <a>
+    <a href="">
       <img className="w-full h-60 object-cover p-5" src={image} alt="product" />
     </a>
   );
