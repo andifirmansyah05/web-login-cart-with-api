@@ -8,6 +8,25 @@ interface Products {
   image: string;
 }
 
+interface RatingProps {
+  rate: number;
+  count: number;
+}
+interface Product {
+  id?: number;
+  title?: string;
+  price?: number;
+  description?: string;
+  image?: string;
+  rating?: RatingProps;
+}
+
+interface CallbackGetDetailProduct {
+  callback: (data: Product) => void
+
+} 
+
+
 interface GetProductsProps {
   callback: (products: Products[]) => void;
 }
@@ -23,9 +42,11 @@ export const getProducts = ({ callback }: GetProductsProps) => {
     });
 };
 
-export const getDetailProduct = (id, callback) => {
+
+
+export const getDetailProduct = (id:number, {callback}: CallbackGetDetailProduct) => {
   axios
-    .get<Products[]>("https://fakestoreapi.com/products" + "/" + id)
+    .get<Product>("https://fakestoreapi.com/products" + "/" + id)
     .then((res) => {
       callback(res.data);
     })

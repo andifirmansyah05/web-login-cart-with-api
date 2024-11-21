@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { getDetailProduct } from "../services/products.service";
 import Button from "../components/elements/button/Button";
-import { ArrowBottomLeftIcon, ArrowLeftIcon } from "@radix-ui/react-icons";
+import { ArrowLeftIcon } from "@radix-ui/react-icons";
 
 interface RatingProps {
   rate: number;
@@ -22,9 +22,11 @@ const DetailProductPage = () => {
   const { id } = useParams();
   const [product, setProduct] = useState<Product>({});
   useEffect(() => {
-    getDetailProduct(id, (data: Product) => {
-      setProduct(data);
-    });
+    getDetailProduct(Number(id), {
+        callback: (data: Product) => {
+          setProduct(data); // Set data produk ke state
+        },
+      });
   }, [id]);
 
   console.log(product);
