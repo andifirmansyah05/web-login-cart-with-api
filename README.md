@@ -1,50 +1,44 @@
-# React + TypeScript + Vite
+# Login, Cart, and API  
+## Tool  
+The library used is React Vite, react-router-dom, Radix UI, axios, and [Fake Store API](https://fakestoreapi.com/).  
+Content:  
+- Login and logout via API  
+- Add to cart  
+- Get products from API  
+- Dark and light mode  
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## UI Page  
+### Root Page  
+Home view  
+![alt text](https://github.com/andifirmansyah05/web-login-cart-with-api/blob/main/public/images/forGithub/root-page.png)  
+The home page contains four buttons:  
+- **Login**: This feature can be accessed by entering `username: johnd` and `password: m38rmF$`.  
+- **Register**: This feature is not yet functional, but the UI has been created.  
+- **Product**: This feature can be accessed, but login is required. If not logged in, the user will be redirected to the login page.  
+- **Profile**: Similar to the Product feature, this page requires login; otherwise, the user will be redirected to the login page.  
 
-Currently, two official plugins are available:
+### Login Page  
+Login page view  
+![alt text](https://github.com/andifirmansyah05/web-login-cart-with-api/blob/main/public/images/forGithub/login-page.png)  
+The login feature does not directly access a database but uses an API. The API used is open-source: [Fake Store API](https://fakestoreapi.com). To test login, you can use `username: johnd` and `password: m38rmF$`.  
+It also includes a dark mode toggle that can be activated by clicking the button at the top-right corner.  
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Register Page  
+Register page view  
+![alt text](https://github.com/andifirmansyah05/web-login-cart-with-api/blob/main/public/images/forGithub/register-page.png)  
+This feature is not functional yet, but the UI has been created.  
 
-## Expanding the ESLint configuration
+### Products Page  
+Products page view  
+![alt text](https://github.com/andifirmansyah05/web-login-cart-with-api/blob/main/public/images/forGithub/products-page.png)  
+Product data is retrieved from the same API used for login. This page includes an **add-to-cart feature** and dark mode (the image above shows light mode).  
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+Login is required to access this page. If the user is not logged in, they will be redirected to the login page. Below is the dark mode view:  
+![alt text](https://github.com/andifirmansyah05/web-login-cart-with-api/blob/main/public/images/forGithub/products-page-dark.png)  
 
-- Configure the top-level `parserOptions` property like this:
+### Profile Page  
+The page functions but does not yet have a UI. Like the products page, login is required to access it.  
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
-
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+### API  
+The API used is the [Fake Store API](https://fakestoreapi.com).  
+![alt text](https://github.com/andifirmansyah05/web-login-cart-with-api/blob/main/public/images/forGithub/fake-store-api.png)  
