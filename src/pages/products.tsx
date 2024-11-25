@@ -1,10 +1,6 @@
-import { useContext, useEffect, useRef, useState } from "react";
-import Button from "../components/elements/button/Button";
+import { useContext, useEffect, useState } from "react";
 import CardProduct from "../components/fragments/CardProduct";
 import { getProducts } from "../services/products.service";
-import { useLogin } from "../hooks/useLogin";
-import { PersonIcon } from "@radix-ui/react-icons";
-import { Link } from "react-router-dom";
 import { DarkMode } from "../context/DarkMode";
 import TableCart from "../components/layouts/TableCart";
 import NavBar from "../components/layouts/NavBar";
@@ -54,7 +50,7 @@ const ProductsPage = () => {
   const [card, setCard] = useState<CardItem[]>([]);
   // const [totalPrice, setTotalPrice] = useState(0);
   const [products, setProducts] = useState<Products[]>([]);
-  const { isDarkMode, setIsDarkMode } = useContext(DarkMode);
+  const { isDarkMode} = useContext(DarkMode);
   useEffect(() => {
     const savedCard = localStorage.getItem("card");
     if (savedCard) {
@@ -69,34 +65,6 @@ const ProductsPage = () => {
       },
     });
   }, []);
-
-  // useEffect(() => {
-  //   if (products.length > 0 && card.length > 0) {
-  //     const sum = card.reduce((acc, item) => {
-  //       const product = products.find((product) => product.id === item.id);
-  //       if (!product) {
-  //         alert(`Product not found for ID: ${item.id}`);
-  //         return acc;
-  //       }
-  //       return acc + product.price * item.qty;
-  //     }, 0);
-  //     setTotalPrice(sum);
-  //     localStorage.setItem("card", JSON.stringify(card));
-  //   }
-  // }, [card, products]);
-
-  // const handleLogout = () => {
-  //   localStorage.removeItem("token");
-  //   window.location.href = "/login";
-  // };
-
-  // const totalPriceRef = useRef<HTMLTableRowElement | null>(null);
-  // useEffect(() => {
-  //   if (totalPriceRef.current) {
-  //     totalPriceRef.current.style.display =
-  //       card.length > 0 ? "table-row" : "none";
-  //   }
-  // }, [card]);
 
   const handleAddToCard = (id: number) => {
     setCard((card) => {
